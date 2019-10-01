@@ -110,7 +110,7 @@ table .desc {
 }
 
 table .desc td:first-child {
-    padding: 15px;
+    padding: 5px;
     text-align: left;
 }
 
@@ -128,7 +128,7 @@ table th div {
 }
 
 table th:first-child {
-    width: 35%;
+    width: 25%;
     border-left: none;
 }
 
@@ -164,7 +164,7 @@ table td {
 }
 
 table td:first-child {
-    text-align: right;
+    text-align: center;
 }
 
 table td.color {
