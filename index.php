@@ -48,6 +48,13 @@
         }
 
         $(document).ready(function() {
+            const toTwoDigits = num => (num < 10 ? "0" + num : num);
+            let today = new Date();
+            let year = today.getFullYear();
+            let year_TH = parseInt(today.getFullYear()) + 543;
+            let month = toTwoDigits(today.getMonth() + 1);
+            let day = toTwoDigits(today.getDate());
+            let date_now = `${year}-${month}-${day}`;
             $.ajax({
                 url: "models/getData.php",
                 method: "POST",
@@ -69,10 +76,11 @@
                     result += '</thead>'
                     result += '<tbody id="plan">'
                     for (let i = 0; i < decode.dataParse.length; i++) {
+                        let active = (date_now == dataParse[i].date_time) ? "active" : "";
                         result += '<tr>'
-                        result += '<td>' + formateDateTH(dataParse[i].date_time) + '</td>'
-                        result += '<td class="current">' + dataParse[i].name_admin + '</td>'
-                        result += '<td>' + dataParse[i].name_tech + '</td>'
+                        result += '<td class="' + active + '">' + formateDateTH(dataParse[i].date_time) + '</td>'
+                        result += '<td class="' + active + '">' + dataParse[i].name_admin + '</td>'
+                        result += '<td class="' + active + '">' + dataParse[i].name_tech + '</td>'
                         result += '</tr>'
                     }
                     result += '</tbody>'

@@ -77,6 +77,10 @@ table #plan tr:nth-child(odd) {
     background: #f6f5f5;
 }
 
+.active {
+    background: #06e419;
+}
+
 table .current {
     background: rgba(231, 72, 154, 0.2);
 }
