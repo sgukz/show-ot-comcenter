@@ -64,7 +64,6 @@
                 },
                 success: function(data) {
                     let decode = JSON.parse(data);
-                    //console.log(decode.dataParse);
                     let dataParse = decode.dataParse
                     let result = '<table>'
                     result += '<thead>'
