@@ -29,7 +29,7 @@
                                 // $sql = mysql_query("SELECT * FROM tb_name_comcenter ORDER BY id_name");
                                 // while ($rs = mysql_fetch_array($sql)) {
                                     ?>
-                                    <option value="<?= $rs['id_name'] ?>"><?php echo $rs['name_comcenter'] ?></option>
+                                    <option value=""><?php //echo $rs['name_comcenter'] ?></option>
                                 <?php
                                 //}
                                 ?>
