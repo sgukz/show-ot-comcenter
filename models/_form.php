@@ -1,13 +1,12 @@
 <?php
-// $mysql = mysql_connect('61.19.254.3', 'rehit', 'IT@101');
-// //$mysql = mysql_connect('127.0.0.1', 'root', '');
-// if (!$mysql) {
-//     die('Could not connect: ' . mysql_error());
-//     exit;
-// } else {
-//     mysql_select_db("db_itreh");
-//     mysql_query("SET NAMES UTF8");
-// }
+$mysql = mysqli_connect('61.19.254.3', 'rehit', 'IT@101', 'db_itreh');
+//$mysql = mysql_connect('127.0.0.1', 'root', '');
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+} else {
+    mysqli_query($mysql, "SET NAMES UTF8");
+}
+
 ?>
 <div class="modal-dialog">
     <!-- Modal content-->
@@ -26,12 +25,13 @@
                             <select class="form-control" name="name_comp" id="name_comp" required>
                                 <option value="" disabled>เลือกรายชื่อ</option>
                                 <?php
-                                // $sql = mysql_query("SELECT * FROM tb_name_comcenter ORDER BY id_name");
-                                // while ($rs = mysql_fetch_array($sql)) {
+                                $sql = mysqli_query($mysql, "SELECT * FROM tb_name_comcenter ORDER BY id_name");
+                                while ($rs = mysqli_fetch_array($sql)) {
                                     ?>
-                                    <option value=""><?php //echo $rs['name_comcenter'] ?></option>
+                                    <option value="<?php echo $rs['id_name']; ?>"><?php echo $rs['name_comcenter'];?></option>
                                 <?php
-                                //}
+                                }
+                                mysqli_close($con);
                                 ?>
                             </select>
                         </div>
