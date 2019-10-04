@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ตารางเวรศูนย์คอมพิวเตอร์</title>
     <link rel="stylesheet" type="text/css" href="dist/css/style-me.css">
+    <link rel="stylesheet" href="dist/css/bootstrap.css" />
     <script src="dist/js/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet">
 </head>
 
@@ -24,6 +26,11 @@
     }
     ?>
     <div id="">
+        <div class="modal fade" id="depModal" role="dialog">
+            <?php
+            require 'models/_form.php';
+            ?>
+        </div>
         <div class="intro">
             <hgroup>
                 <h4>ตารางเวรบ่ายศูนย์คอมพิวเตอร์</h4>
@@ -48,6 +55,37 @@
         }
 
         $(document).ready(function() {
+            $('#_form').on("submit", function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: "models/updateData.php",
+                    method: "POST",
+                    data: $('#_form').serialize(),
+                    beforeSend: function() {
+
+                    },
+                    success: function(data) {
+                        $('#depModal').modal('hide');
+                        location.reload();
+                    },
+                    error: function() {
+
+                    }
+                });
+            });
+
+            function showQuestion(event, $modal) {
+                var Target = $(event.relatedTarget); // Button that triggered the modal
+                var idUser = parseInt(Target.data('iduser'));
+
+                var dateTime = Target.data('datetime');
+                $modal.find('.modal-title').text("วันที่ " + formateDateTH(dateTime));
+                $('#name_comp').val(idUser).change();
+                $('#dateTime').val(dateTime);
+            }
+            $("#depModal").on('show.bs.modal', function(event) {
+                showQuestion(event, $(this));
+            });
             const toTwoDigits = num => (num < 10 ? "0" + num : num);
             let today = new Date();
             let year = today.getFullYear();
@@ -75,11 +113,11 @@
                     result += '</thead>'
                     result += '<tbody id="plan">'
                     for (let i = 0; i < decode.dataParse.length; i++) {
-                        let active = (date_now == dataParse[i].date_time) ? "active" : "";
+                        let active = (date_now == dataParse[i].dateTime) ? "active" : "";
                         result += '<tr>'
-                        result += '<td class="' + active + '">' + formateDateTH(dataParse[i].date_time) + '</td>'
-                        result += '<td class="' + active + '">' + dataParse[i].name_admin + '</td>'
-                        result += '<td class="' + active + '">' + dataParse[i].name_tech + '</td>'
+                        result += '<td class="' + active + '">' + formateDateTH(dataParse[i].dateTime) + '</td>'
+                        result += '<td class="' + active + '"><a href="#"  data-toggle="modal" data-target="#depModal" data-datetime="' + dataParse[i].dateTime + '" data-iduser="' + dataParse[i].name_admin + '">' + dataParse[i].nameAdmin + '</a></td>'
+                        result += '<td class="' + active + '"><a href="#" data-toggle="modal" data-target="#depModal"  data-datetime="' + dataParse[i].dateTime + '" data-iduser="' + dataParse[i].name_tech + '">' + dataParse[i].nameTech + '</a></td>'
                         result += '</tr>'
                     }
                     result += '</tbody>'
