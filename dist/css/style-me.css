@@ -175,3 +175,8 @@ table td.color {
     font-size: 1em;
     line-height: 1em;
 }
+@media (min-width: 768px) {
+        body {
+            font-size: 2em;
+        }
+}
