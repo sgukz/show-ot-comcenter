@@ -55,6 +55,7 @@
         }
 
         $(document).ready(function() {
+            getData();
             $('#_form').on("submit", function(event) {
                 event.preventDefault();
                 $.ajax({
@@ -66,7 +67,7 @@
                     },
                     success: function(data) {
                         $('#depModal').modal('hide');
-                        location.reload();
+                        getData();
                     },
                     error: function() {
 
@@ -86,48 +87,51 @@
             $("#depModal").on('show.bs.modal', function(event) {
                 showQuestion(event, $(this));
             });
-            const toTwoDigits = num => (num < 10 ? "0" + num : num);
-            let today = new Date();
-            let year = today.getFullYear();
-            let year_TH = parseInt(today.getFullYear()) + 543;
-            let month = toTwoDigits(today.getMonth() + 1);
-            let day = toTwoDigits(today.getDate());
-            let date_now = `${year}-${month}-${day}`;
-            $.ajax({
-                url: "models/getData.php",
-                method: "POST",
-                data: "id=0",
-                beforeSend: function() {
 
-                },
-                success: function(data) {
-                    let decode = JSON.parse(data);
-                    let dataParse = decode.dataParse
-                    let result = '<table>'
-                    result += '<thead>'
-                    result += '<tr>'
-                    result += '<th><div class="heading">วันที่</div></th>'
-                    result += '<th><div class="heading">โปรแกรมเมอร์</div></th>'
-                    result += '<th><div class="heading">ช่างเทคนิค</div></th>'
-                    result += '</tr>'
-                    result += '</thead>'
-                    result += '<tbody id="plan">'
-                    for (let i = 0; i < decode.dataParse.length; i++) {
-                        let active = (date_now == dataParse[i].dateTime) ? "active" : "";
+            function getData() {
+                const toTwoDigits = num => (num < 10 ? "0" + num : num);
+                let today = new Date();
+                let year = today.getFullYear();
+                let year_TH = parseInt(today.getFullYear()) + 543;
+                let month = toTwoDigits(today.getMonth() + 1);
+                let day = toTwoDigits(today.getDate());
+                let date_now = `${year}-${month}-${day}`;
+                $.ajax({
+                    url: "models/getData.php",
+                    method: "POST",
+                    data: "id=0",
+                    beforeSend: function() {
+
+                    },
+                    success: function(data) {
+                        let decode = JSON.parse(data);
+                        let dataParse = decode.dataParse
+                        let result = '<table>'
+                        result += '<thead>'
                         result += '<tr>'
-                        result += '<td class="' + active + '">' + formateDateTH(dataParse[i].dateTime) + '</td>'
-                        result += '<td class="' + active + '"><a href="#"  data-toggle="modal" data-target="#depModal" data-datetime="' + dataParse[i].dateTime + '" data-iduser="' + dataParse[i].name_admin + '">' + dataParse[i].nameAdmin + '</a></td>'
-                        result += '<td class="' + active + '"><a href="#" data-toggle="modal" data-target="#depModal"  data-datetime="' + dataParse[i].dateTime + '" data-iduser="' + dataParse[i].name_tech + '">' + dataParse[i].nameTech + '</a></td>'
+                        result += '<th><div class="heading">วันที่</div></th>'
+                        result += '<th><div class="heading">โปรแกรมเมอร์</div></th>'
+                        result += '<th><div class="heading">ช่างเทคนิค</div></th>'
                         result += '</tr>'
-                    }
-                    result += '</tbody>'
-                    result += '</table>'
-                    $('#showData').html(result);
-                },
-                error: function() {
+                        result += '</thead>'
+                        result += '<tbody id="plan">'
+                        for (let i = 0; i < decode.dataParse.length; i++) {
+                            let active = (date_now == dataParse[i].dateTime) ? "active" : "";
+                            result += '<tr>'
+                            result += '<td class="' + active + '">' + formateDateTH(dataParse[i].dateTime) + '</td>'
+                            result += '<td class="' + active + '"><a href="#"  data-toggle="modal" data-target="#depModal" data-datetime="' + dataParse[i].dateTime + '" data-iduser="' + dataParse[i].name_admin + '">' + dataParse[i].nameAdmin + '</a></td>'
+                            result += '<td class="' + active + '"><a href="#" data-toggle="modal" data-target="#depModal"  data-datetime="' + dataParse[i].dateTime + '" data-iduser="' + dataParse[i].name_tech + '">' + dataParse[i].nameTech + '</a></td>'
+                            result += '</tr>'
+                        }
+                        result += '</tbody>'
+                        result += '</table>'
+                        $('#showData').html(result);
+                    },
+                    error: function() {
 
-                }
-            });
+                    }
+                });
+            }
         });
     </script>
 </body>
