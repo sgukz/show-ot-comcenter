@@ -45,7 +45,7 @@
             let toTwoDigits = num => (num < 10 ? "0" + num : num);
             let date = dateTime.split("-");
             let day = parseInt(date[2]);
-            let month = date[1];
+            let month = parseInt(date[1]);
             let strMonthCut = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             let year = parseInt(date[0]) + 543;
             let createdDate = day + " " + strMonthCut[month] + " " + year;
