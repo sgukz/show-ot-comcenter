@@ -1,5 +1,5 @@
 <?php
-$url = 'http://49.231.5.51:3000/getOTofMonth';
+$url = 'http://sgdev.tech:3000/getOTofMonth';
 $data = [
     'dateStart' => '',
 ];

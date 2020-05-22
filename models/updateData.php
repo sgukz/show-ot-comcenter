@@ -1,5 +1,5 @@
 <?php
-$url = 'http://49.231.5.51:3000/update';
+$url = 'http://sgdev.tech:3000/update';
 $data = [
     'dateTime' => $_POST['dateTime'],
     'idUser' => $_POST['name_comp'],
